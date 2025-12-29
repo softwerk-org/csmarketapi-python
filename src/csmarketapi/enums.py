@@ -3,6 +3,8 @@ from enum import Enum
 
 class Market(Enum):
     STEAMCOMMUNITY = "STEAMCOMMUNITY"
+    BUFFMARKET = "BUFFMARKET"
+    SKINS = "SKINS"
     SKINPORT = "SKINPORT"
     MARKETCSGO = "MARKETCSGO"
     DMARKET = "DMARKET"

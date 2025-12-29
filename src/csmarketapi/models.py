@@ -135,39 +135,6 @@ class PlayerCountsHistory(BaseModel):
     items: list[Item]
 
 
-class SteamProfile(BaseModel):
-    data: Any
-
-
-class SteamInventory(BaseModel):
-    class Asset(BaseModel):
-        assetid: str
-        classid: str
-        instanceid: str | None = None
-        contextid: str | None = None
-        market_hash_name: str | None = None
-        icon_url: str | None = None
-        name: str | None = None
-        type: str | None = None
-        tradable: bool | None = None
-        marketable: bool | None = None
-        inspect_link: str | None = None
-
-    steam_id: str
-    assets: list[Asset]
-
-
-class SteamFriendslist(BaseModel):
-    data: Any
-
-
-class FloatInfo(BaseModel):
-    time: int | None = None
-    url: str | None = None
-    iteminfo: dict | None = None
-    status: Any | None = None
-
-
 class Markets(BaseModel):
     class Trustpilot(BaseModel):
         rating: float | None = None

@@ -3,7 +3,6 @@ import httpx
 from .enums import Currency, Market
 from .models import (
     CurrencyRates,
-    FloatInfo,
     Items,
     ListingsHistoryAggregated,
     ListingsLatestAggregated,
@@ -12,9 +11,6 @@ from .models import (
     PlayerCountsLatest,
     SalesHistoryAggregated,
     SalesLatestAggregated,
-    SteamFriendslist,
-    SteamInventory,
-    SteamProfile,
 )
 
 
@@ -154,43 +150,3 @@ class CSMarketAPI:
         )
         r.raise_for_status()
         return PlayerCountsHistory(items=r.json())
-
-    async def get_steam_profile(self, steam_id: str) -> SteamProfile:
-        r = await self.client.get(
-            "/v1/steam/profile",
-            params={
-                "steam_id": steam_id,
-            },
-        )
-        r.raise_for_status()
-        return SteamProfile(data=r.json())
-
-    async def get_steam_inventory(self, steam_id: str) -> SteamInventory:
-        r = await self.client.get(
-            "/v1/steam/inventory",
-            params={
-                "steam_id": steam_id,
-            },
-        )
-        r.raise_for_status()
-        return SteamInventory(**r.json())
-
-    async def get_steam_friendslist(self, steam_id: str) -> SteamFriendslist:
-        r = await self.client.get(
-            "/v1/steam/friendslist",
-            params={
-                "steam_id": steam_id,
-            },
-        )
-        r.raise_for_status()
-        return SteamFriendslist(data=r.json())
-
-    async def get_float_info(self, inspect_link: str) -> FloatInfo:
-        r = await self.client.get(
-            "/v1/float",
-            params={
-                "inspect_link": inspect_link,
-            },
-        )
-        r.raise_for_status()
-        return FloatInfo(**r.json())
