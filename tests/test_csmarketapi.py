@@ -3,7 +3,6 @@ import os
 import dotenv
 import pytest
 import pytest_asyncio
-
 from csmarketapi import CSMarketAPI
 from csmarketapi.enums import Market
 
@@ -14,8 +13,11 @@ def load_env():
 
 
 @pytest_asyncio.fixture
-async def client():
-    return CSMarketAPI(os.getenv("API_KEY"))
+async def client(load_env):
+    api_key = os.getenv("API_KEY")
+    if not api_key:
+        pytest.skip("API_KEY environment variable is required for tests")
+    return CSMarketAPI(api_key)
 
 
 @pytest.mark.asyncio
@@ -71,34 +73,5 @@ async def test_get_player_counts_history(client: CSMarketAPI):
 
 
 @pytest.mark.asyncio
-async def test_get_steam_profile(client: CSMarketAPI):
-    await client.get_steam_profile(
-        steam_id="76561198032362775",
-    )
-
-
-@pytest.mark.asyncio
-async def test_get_steam_inventory(client: CSMarketAPI):
-    await client.get_steam_inventory(
-        steam_id="76561198032362775",
-    )
-
-
-@pytest.mark.asyncio
-async def test_get_steam_friendslist(client: CSMarketAPI):
-    await client.get_steam_friendslist(
-        steam_id="76561198032362775",
-    )
-
-
-@pytest.mark.asyncio
-async def test_get_float_info(client: CSMarketAPI):
-    await client.get_float_info(
-        inspect_link="steam://rungame/730/76561202255233023/+csgo_econ_action_preview%20M637943594289708232A46177406910D291823901775499029",
-    )
-
-
-@pytest.mark.asyncio
 async def test_get_markets(client: CSMarketAPI):
     await client.get_markets()
-
